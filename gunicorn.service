@@ -1,0 +1,14 @@
+[Unit]
+Description=gunicorn instance to server api
+After=network.target
+
+[Service]
+User=socialapi
+Group=socialapi
+WorkingDirectory=/home/socialapi/app/src/
+Environment="PATH=/home/socialapi/app/venv/bin"
+EnvironmentFile=/home/socialapi/.env
+ExecStart=/home/socialapi/app/venv/bin/gunicorn -w 4 -k uvicorn.workers.UvicornWorker app.main:app --bind 0.0.0.0:8000
+
+[Install]
+WantedBy=multi-user.target
